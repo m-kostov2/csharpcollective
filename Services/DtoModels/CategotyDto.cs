@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CSharpCollective.Models.DtoModels
+namespace CSharpCollective.Services.DtoModels
 {
     public class CategoryDto
     {

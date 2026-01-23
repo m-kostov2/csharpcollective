@@ -1,11 +1,12 @@
 ﻿
 
-using CSharpCollective.Models.DtoModels;
+using AutoMapper;
+
+
+using CSharpCollective.Services.DtoModels;
 using DataBase.DataContext;
 using DataBase.Models;
-
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Services.ConfigMap;
 
 
 namespace Services
@@ -14,30 +15,37 @@ namespace Services
     {
 
         private CollectiveContext _context;
+        private readonly IMapper _mapper;
 
-        public LoginService()
+
+        public LoginService(CollectiveContext context, IMapper mapper)
         {
-            _context = new CollectiveContext();
+            _context =context;
+            _mapper = mapper;
+
         }
 
-        public async Task<User> CommunicationService(UserDto Datarecieved) 
+
+
+        public UserDto userExists(UserDto Datarecieved)
         {
-
-
-            
-
-            bool userExists = _context.Users.Any(u => u.UserName == Datarecieved.UserName);
-
-
+         
 
             User userInfo = new User();
-            if (userExists == true)
+             
+            _mapper.Map(Datarecieved, userInfo);
+
+
+            var userExists = _context.Users.SingleOrDefault(u => u.UserName == userInfo.UserName);
+            ;
+            UserDto userDtoInfo = new UserDto();
+            if (userExists != null)
             {
-                var role = _context.Users.Where(u => u.UserName == Datarecieved.UserName).Select(u => u.Role).ToString();
+                var role = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Role).ToString();
 
                 if (role == "Admin")
                 {
-                    userInfo = _context.Users.Where(u => u.UserName == Datarecieved.UserName).Select(u => new User
+                    userInfo = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => new User
                     {
                         UserName = u.UserName,
                         Email = u.Email,
@@ -46,31 +54,32 @@ namespace Services
 
                     }).Single();
 
-
+                  
 
                 }
                 else if (role == "User")
                 {
-                    userInfo = _context.Users.Where(u => u.UserName == Datarecieved.UserName).Select(u => new User
+                    userInfo = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => new User
                     {
                         UserName = u.UserName,
                         Email = u.Email,
                         Role = u.Role
-
+                        
                     }).Single();
 
                 }
-
+                _mapper.Map(userInfo, userDtoInfo);
             }
-            else if (userExists == false)
-            { 
-            
-            return null;
+            else if (userExists == null)
+            {
+                userDtoInfo = null;
+                return userDtoInfo;
             }
 
-                return await Task.FromResult(userInfo);
+            return  userDtoInfo;
 
         }
 
-        }
+
     }
+}

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataBase.DataBaseProvider
 {
-    public class Configuration
+    public static class Configuration
     {
-       public string DbConnectionString = "Server=DESKTOP-K00EKIT\\SQLEXPRESS;Database=CollectiveDb;Trusted_Connection=True;TrustServerCertificate=True;";
+        public const string DbConnectionString = "Server=DESKTOP-K00EKIT\\SQLEXPRESS;Database=CollectiveDb;Trusted_Connection=True;TrustServerCertificate=True;";
     }
 }

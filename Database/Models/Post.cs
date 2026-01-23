@@ -1,4 +1,4 @@
-﻿using Database.Models;
+﻿
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,6 +11,10 @@ namespace DataBase.Models
 {
     public class Post
     {
+        public Post()
+        {
+            
+        }
         public Post(string title,string content)
         {
             this.Id = Guid.NewGuid();       
@@ -18,19 +22,23 @@ namespace DataBase.Models
             this.Content = content;
             this.CreatedAt = DateTime.UtcNow;
             Tags = new HashSet<Tag>();
+            Categories = new HashSet<Category>();
         }
         [Key]
-        private Guid Id { get; set; }
+        public Guid Id { get;  set; }
+
 
         [ForeignKey("Author")]
-        public int AuthorId { get; private set; }
-        public User Author { get; set; }
-        public string Title { get; private set; }
-        public string Content { get; private set; }
+        public Guid AuthorId { get; set; }
+        public virtual User Author { get; set; }
 
-        public readonly DateTime CreatedAt;
+        public string Title { get;  set; }  
+        public string Content { get;  set; }
+
+        public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
+        public virtual ICollection<Category>? Categories { get; set; }
         public virtual ICollection<Tag>? Tags { get; set; }
 
     }

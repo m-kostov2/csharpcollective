@@ -11,6 +11,11 @@ namespace DataBase.Models
     public class Tag
     {
 
+        public Tag()
+        {
+            
+        }
+
         public Tag(string name)
         {
             Id = Guid.NewGuid();
@@ -18,8 +23,8 @@ namespace DataBase.Models
             Posts = new HashSet<Post>();
         }
         [Key]
-        private Guid Id { get; set; }
-        public string Name { get; private set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
        
         public virtual ICollection<Post>? Posts { get; set; } 
 

@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CSharpCollective.Models.DtoModels
+namespace CSharpCollective.Services.DtoModels
 {
     public class TagDto
     {
-
+        public TagDto()
+        {
+            
+        }
         public TagDto(string name)
         {
             this.Name = name;

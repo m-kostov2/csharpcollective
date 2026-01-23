@@ -1,4 +1,5 @@
-﻿using Database.Models;
+﻿
+using Database.Models;
 using DataBase.DataBaseProvider;
 using DataBase.Models;
 using Microsoft.EntityFrameworkCore;
@@ -20,14 +21,17 @@ namespace DataBase.DataContext
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
+        public virtual DbSet<PostTag> PostTags { get; set; }
+
+
        
-
-
-
-        string DbConnectionString = new Configuration().DbConnectionString;
-        public CollectiveContext()
+        public CollectiveContext() 
         {
+           
 
+        }
+        public CollectiveContext(DbContextOptions<CollectiveContext> options) : base(options)
+        {
         }
 
 
@@ -37,8 +41,19 @@ namespace DataBase.DataContext
         {
 
 
-            optionsBuilder.UseSqlServer(DbConnectionString)
-                 .UseLazyLoadingProxies();
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder
+                    .UseSqlServer(Configuration.DbConnectionString,
+                        sqlOptions => sqlOptions.EnableRetryOnFailure(
+                            maxRetryCount: 5,
+                            maxRetryDelay: TimeSpan.FromSeconds(10),
+                            errorNumbersToAdd: null
+                        )
+                    )
+                    .UseLazyLoadingProxies();
+            }
+
         }
 
 
@@ -50,24 +65,49 @@ namespace DataBase.DataContext
             base.OnModelCreating(modelBuilder);
 
 
-            modelBuilder.Entity<User>()
-               .HasMany(p => p.Posts)                                                //one - to - many,  ---check user to posts/comments
-               .WithOne(p => p.Author)                                               //one - to - one,   -- check comment to user
-               .OnDelete(DeleteBehavior.NoAction);                                   //many - to - many   -- check posts to tags                                       
+
+            //one - to - many,  ---check user to posts/comments
+            //one - to - one,   -- check comment to user
+            //many - to - many   -- check posts to tags                                       
 
             modelBuilder.Entity<User>()
-               .HasMany(p => p.Comments)
-               .WithOne(p => p.Author)
-               .OnDelete(DeleteBehavior.NoAction);
+              .HasMany(u => u.Posts)
+              .WithOne(p => p.Author)
+              .HasForeignKey(p => p.AuthorId)
+              .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Comment>()
-                .HasOne(p => p.Author)
-                .WithOne()
+            modelBuilder.Entity<User>()
+                .HasMany(u => u.Comments)
+                .WithOne(c => c.Author)
+                .HasForeignKey(c => c.AuthorId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+
+            modelBuilder.Entity<Category>()
+             .HasMany(c => c.Posts)
+             .WithOne()
+             .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Post>()
-              .HasMany(p => p.Tags)
-              .WithMany(t => t.Posts);
+            .HasMany(c => c.Categories)
+            .WithOne()
+            .OnDelete(DeleteBehavior.NoAction);
+
+
+            modelBuilder.Entity<PostTag>()
+          .HasKey(pt => new { pt.PostId, pt.TagId });
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(pt => pt.Post)
+                .WithMany()
+                .HasForeignKey(pt => pt.PostId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<PostTag>()
+                .HasOne(pt => pt.Tag)
+                .WithMany()
+                .HasForeignKey(pt => pt.TagId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
 

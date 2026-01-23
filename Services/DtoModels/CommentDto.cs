@@ -1,9 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CSharpCollective.Models.DtoModels
+namespace CSharpCollective.Services.DtoModels
 {
     public class CommentDto
     {
+        public CommentDto()
+        {
+            
+        }
 
         public CommentDto(string content)
         {

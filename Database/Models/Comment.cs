@@ -9,6 +9,11 @@ namespace DataBase.Models
 {
     public class Comment
     {
+        public Comment()
+        {
+            
+        }
+
         public Comment(string content)
         {
             this.Id = Guid.NewGuid();
@@ -16,11 +21,11 @@ namespace DataBase.Models
             this.CreatedAt = DateTime.UtcNow;
         }
         [Key]
-        private Guid Id { get; set; }
-        public int AuthorId { get; private set; }
-        public virtual User Author { get; set; }
-        public string Content { get; private set; }
-        public DateTime CreatedAt { get; private set; }
+        public Guid Id { get;  set; }
+        public Guid AuthorId { get;  set; }
+        public virtual User Author { get; set; } = null!;
+        public string Content { get;  set; }
+        public DateTime CreatedAt { get;  set; }
 
 
     }

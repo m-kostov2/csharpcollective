@@ -1,10 +1,15 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CSharpCollective.Models.DtoModels
-{
+namespace CSharpCollective.Services.DtoModels;
     public class PostDto
     {
+
+        public PostDto()
+        {
+            
+        }
+
         public PostDto(string title, string content)
         {
 
@@ -17,4 +22,3 @@ namespace CSharpCollective.Models.DtoModels
         public string Content { get; private set; }
 
     }
-}
