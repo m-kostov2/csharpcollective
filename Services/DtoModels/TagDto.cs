@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DataBase.ModelConstrains;
+using System.ComponentModel.DataAnnotations;
 
 namespace CSharpCollective.Services.DtoModels
 {
@@ -13,6 +14,7 @@ namespace CSharpCollective.Services.DtoModels
             this.Name = name;
 
         }
+        [MinLength(5), MaxLength(Constrains.MaxTagNameLength)]
         public string Name { get; private set; }
     }
 }

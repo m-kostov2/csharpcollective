@@ -1,4 +1,5 @@
 ﻿
+using DataBase.ModelConstrains;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -31,8 +32,9 @@ namespace DataBase.Models
         [ForeignKey("Author")]
         public Guid AuthorId { get; set; }
         public virtual User Author { get; set; }
-
-        public string Title { get;  set; }  
+        [MinLength(5), MaxLength(Constrains.MaxPostTitleLength)]
+        public string Title { get;  set; }
+        [MaxLength(Constrains.MaxPostContentLength)]
         public string Content { get;  set; }
 
         public DateTime CreatedAt { get; set; }

@@ -27,7 +27,7 @@ namespace CSharpCollective
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             builder.Services.AddTransient<LoginService>();
-            builder.Services.AddScoped<RegisterService>();
+            builder.Services.AddTransient<RegisterService>();
             builder.Services.AddScoped<CommentService>();
             builder.Services.AddScoped<PostService>();
 
@@ -70,6 +70,10 @@ namespace CSharpCollective
             app.MapControllerRoute(
                name: "Login",
                pattern: "{controller=Login}/{action=Login}/{id?}");
+
+            app.MapControllerRoute(
+              name: "Register",
+              pattern: "{controller=Register}/{action=Register}/{id?}");
 
             app.MapRazorPages()
                .WithStaticAssets();

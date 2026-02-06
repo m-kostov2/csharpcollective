@@ -1,5 +1,5 @@
 ﻿
-using Database.Models;
+
 using DataBase.DataBaseProvider;
 using DataBase.Models;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ namespace DataBase.DataContext
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
-        public virtual DbSet<PostTag> PostTags { get; set; }
+       // public virtual DbSet<PostTag> PostTags { get; set; }
 
 
        
@@ -94,20 +94,20 @@ namespace DataBase.DataContext
             .OnDelete(DeleteBehavior.NoAction);
 
 
-            modelBuilder.Entity<PostTag>()
-          .HasKey(pt => new { pt.PostId, pt.TagId });
+          //  modelBuilder.Entity<PostTag>()
+          //.HasKey(pt => new { pt.PostId, pt.TagId });
 
-            modelBuilder.Entity<PostTag>()
-                .HasOne(pt => pt.Post)
-                .WithMany()
-                .HasForeignKey(pt => pt.PostId)
-                .OnDelete(DeleteBehavior.NoAction);
+          //  modelBuilder.Entity<PostTag>()
+          //      .HasOne(pt => pt.Post)
+          //      .WithMany()
+          //      .HasForeignKey(pt => pt.PostId)
+          //      .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<PostTag>()
-                .HasOne(pt => pt.Tag)
-                .WithMany()
-                .HasForeignKey(pt => pt.TagId)
-                .OnDelete(DeleteBehavior.NoAction);
+          //  modelBuilder.Entity<PostTag>()
+          //      .HasOne(pt => pt.Tag)
+          //      .WithMany()
+          //      .HasForeignKey(pt => pt.TagId)
+          //      .OnDelete(DeleteBehavior.NoAction);
 
 
 

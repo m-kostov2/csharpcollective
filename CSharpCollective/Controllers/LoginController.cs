@@ -29,7 +29,9 @@ namespace CSharpCollective.Controllers
         public IActionResult Login(UserDto user)
         {
             user = loginService.userExists(user);
-            RedirectToAction("Index", "Home");
+            if (user==null)
+            {return RedirectToAction("Register", "Register"); }
+            
             return View(user);
         }
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataBase.ModelConstrains;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace DataBase.Models
         }
         [Key]
         public int Id { get;  set; }
+        [MaxLength(Constrains.MaxCategoryNameLength)]
         public string Name { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }

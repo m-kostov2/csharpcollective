@@ -1,4 +1,5 @@
 ﻿
+using DataBase.ModelConstrains;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,6 +25,7 @@ namespace DataBase.Models
         }
         [Key]
         public Guid Id { get; set; }
+        [MinLength(5), MaxLength(Constrains.MaxTagNameLength)]
         public string Name { get; set; }
        
         public virtual ICollection<Post>? Posts { get; set; } 

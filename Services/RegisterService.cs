@@ -22,37 +22,35 @@ namespace Services
         private readonly IMapper _mapper;
 
 
-     
-        public RegisterService()
+
+        public RegisterService(CollectiveContext context, IMapper mapper)
         {
-            _context = new CollectiveContext();
-            _mapper = new Mapper(new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<CollectiveProfile>();
-            }));
+            _context = context;
+            _mapper = mapper;
+
         }
-        
 
-        public UserDto CommunicationService(UserDto Datarecieved)
+
+        public  UserDto registerUser(UserDto Datarecieved)
         {
 
-            User userRegistered = new User();
-            
+            User userRegistered = new User(Datarecieved.Email,Datarecieved.Password,Datarecieved.UserName);
+            ;
 
-            _mapper.Map(Datarecieved, userRegistered);
-            userRegistered = new User()
-            {
-                UserName = Datarecieved.UserName,
-                Email = Datarecieved.Email,
-                Password = Datarecieved.Password,
+           // _mapper.Map(Datarecieved, userRegistered);
+            //userRegistered = new User()
+            //{
+            //    UserName = Datarecieved.UserName,
+            //    Email = Datarecieved.Email,
+            //    Password = Datarecieved.Password,
                 
 
-            };
+            //};
 
             
 
-            _context.Users.Add(userRegistered);
-             _context.SaveChangesAsync();
+            _context.Users.AddAsync(userRegistered);
+            _context.SaveChangesAsync();
 
             UserDto userDtoInfo = new UserDto();
             _mapper.Map(userRegistered,userDtoInfo);

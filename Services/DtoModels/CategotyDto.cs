@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DataBase.ModelConstrains;
 
 namespace CSharpCollective.Services.DtoModels
 {
@@ -11,6 +12,7 @@ namespace CSharpCollective.Services.DtoModels
         }
         [Key]
         public int Id { get; set; }
+        [MaxLength(Constrains.MaxCategoryNameLength)]
         public string Name { get; private set; }
     }
 }

@@ -15,7 +15,8 @@ namespace Services.ConfigMap
         {
 
             this.CreateMap<UserDto, User>();
-            this.CreateMap<User, UserDto>();
+            this.CreateMap<User, UserDto>()
+                .ForMember(dest=>dest.Role,opt=>opt.MapFrom(src=>src.Role));
 
             this.CreateMap<CommentDto, Comment>()
                 .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
