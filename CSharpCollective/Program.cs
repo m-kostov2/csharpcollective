@@ -16,8 +16,7 @@ namespace CSharpCollective
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-            //TODO: НАПРАВИ ПЪРВА ВРЪЗКА ЗА ЛОГИН И РЕГИСТРАЦИЯ със контролер и вюта и го накарай да работи
+            
 
            
             builder.Services.AddDbContext<CollectiveContext>();
@@ -30,7 +29,10 @@ namespace CSharpCollective
             builder.Services.AddTransient<RegisterService>();
             builder.Services.AddScoped<CommentService>();
             builder.Services.AddScoped<PostService>();
-
+            builder.Services.AddHttpContextAccessor();
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession();
+            
 
 
             builder.Services.AddRazorPages();
@@ -38,7 +40,7 @@ namespace CSharpCollective
             
 
             var app = builder.Build();
-
+             app.UseSession();
             var scope = app.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<CollectiveContext>();
             db.Database.EnsureCreated();
@@ -64,7 +66,7 @@ namespace CSharpCollective
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}")
+                pattern: "{controller=MainPage}/{action=MainPage}/{id?}")
                 .WithStaticAssets();
 
             app.MapControllerRoute(

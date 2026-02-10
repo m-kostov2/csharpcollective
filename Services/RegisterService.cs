@@ -20,6 +20,7 @@ namespace Services
 
         private CollectiveContext _context;
         private readonly IMapper _mapper;
+        private LoginService loginservice;
 
 
 
@@ -27,6 +28,7 @@ namespace Services
         {
             _context = context;
             _mapper = mapper;
+            loginservice = new LoginService(context, mapper);
 
         }
 
@@ -36,23 +38,20 @@ namespace Services
 
             User userRegistered = new User(Datarecieved.Email,Datarecieved.Password,Datarecieved.UserName);
             ;
-
-           // _mapper.Map(Datarecieved, userRegistered);
-            //userRegistered = new User()
-            //{
-            //    UserName = Datarecieved.UserName,
-            //    Email = Datarecieved.Email,
-            //    Password = Datarecieved.Password,
-                
-
-            //};
-
+            UserDto userDtoInfo = new UserDto();
             
+            var userExist = loginservice.userExists(userRegistered);
+            if (userExist!=null)
+            {
+               
+                _mapper.Map(userRegistered, userDtoInfo);
+                return userDtoInfo;
+            }
 
             _context.Users.AddAsync(userRegistered);
             _context.SaveChangesAsync();
 
-            UserDto userDtoInfo = new UserDto();
+            
             _mapper.Map(userRegistered,userDtoInfo);
 
             return userDtoInfo;

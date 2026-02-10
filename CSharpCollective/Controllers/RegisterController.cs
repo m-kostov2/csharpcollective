@@ -10,6 +10,7 @@ namespace CSharpCollective.Controllers
     {
 
         private RegisterService registerService;
+        
 
         public RegisterController(CollectiveContext context, IMapper mapper)
         {
@@ -32,10 +33,14 @@ namespace CSharpCollective.Controllers
         public IActionResult Register(UserDto user)
         {
             user = registerService.registerUser(user);
-            if (user == null)
-            { return RedirectToAction("Index", "Home"); }
+            if (user != null)
+            {
+                HttpContext.Session.SetString("UserId", user.Id.ToString());
+                return RedirectToAction("MainPage", "MainPage");
+            }
 
-            return View(user);
+            TempData["RegisterError"] = "Register Error";
+            return View();
         }
     }
 }

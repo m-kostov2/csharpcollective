@@ -27,7 +27,7 @@ namespace Services
 
 
 
-        public UserDto userExists(UserDto Datarecieved)
+        public  UserDto userExists(UserDto Datarecieved)
         {
          
 
@@ -39,6 +39,65 @@ namespace Services
             var userExists = _context.Users.SingleOrDefault(u => u.UserName == userInfo.UserName);
             ;
             UserDto userDtoInfo = new UserDto();
+            if (userExists != null)
+            {
+                string role = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Role).Single().ToString();   
+
+                if (role == "Admin")
+                {
+                    userInfo = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => new User
+                    {
+                        
+                        UserName = u.UserName,
+                        Email = u.Email,
+                        Role = u.Role,
+                        Posts = u.Posts.ToArray()
+                        
+                    }).Single();
+                    
+                    
+
+                }
+                else if (role == "User")
+                {
+                    userInfo = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => new User
+                    {
+                        
+                        UserName = u.UserName,
+                        Email = u.Email,
+                        Role = u.Role,
+                        LastOnline = DateTime.Now
+
+                    }).Single();                  
+                    
+                }
+                // _context.Users.Update(userInfo);
+                 userInfo = _context.Users.Single(u => u.UserName == userInfo.UserName);
+                 userInfo.LastOnline = DateTime.Now;
+                _context.SaveChanges();
+                _mapper.Map(userInfo, userDtoInfo);
+            }
+            else if (userExists == null)
+            {
+                userDtoInfo = null;
+                return userDtoInfo;
+            }
+             
+            return  userDtoInfo;
+
+        }
+
+        public User userExists(User Datarecieved)
+        {
+
+
+            User userInfo = new User();
+            userInfo =  Datarecieved;
+
+            
+
+
+            var userExists = _context.Users.SingleOrDefault(u => u.UserName == userInfo.UserName);           
             if (userExists != null)
             {
                 var role = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Role).ToString();
@@ -54,7 +113,7 @@ namespace Services
 
                     }).Single();
 
-                  
+
 
                 }
                 else if (role == "User")
@@ -64,19 +123,19 @@ namespace Services
                         UserName = u.UserName,
                         Email = u.Email,
                         Role = u.Role
-                        
+
                     }).Single();
 
                 }
-                _mapper.Map(userInfo, userDtoInfo);
+               
             }
             else if (userExists == null)
             {
-                userDtoInfo = null;
-                return userDtoInfo;
+                userInfo = null;
+                return userInfo;
             }
 
-            return  userDtoInfo;
+            return userInfo;
 
         }
 

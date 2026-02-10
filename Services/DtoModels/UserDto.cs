@@ -17,6 +17,9 @@ namespace CSharpCollective.Services.DtoModels
             Posts = new HashSet<PostDto>();
 
         }
+
+        public Guid Id { get; set; }
+
         [MinLength(5), MaxLength(Constrains.MaxUserNameLength)]
         public string? UserName { get; set; }
         [MinLength(5), MaxLength(Constrains.MaxPasswordLength)]

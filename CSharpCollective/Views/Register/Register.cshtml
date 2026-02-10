@@ -3,14 +3,18 @@
 
 
 
-
 }
 <div>
     <form asp-action="Register" method="post">
         <h1>Sign up</h1>
+        <p>Username</p>
         <input name="Username" />
-        <input name="Email" />
+        <p>Email</p>
+        <input name="Email" autocomplete="off" />
+        <p>Password</p>
         <input name="Password" type="password" />      
         <button type="submit">Register</button>
+
+        @TempData["RegisterError"]
     </form>
 </div>

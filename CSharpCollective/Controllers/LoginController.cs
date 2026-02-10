@@ -1,9 +1,10 @@
 ﻿using AutoMapper;
 using CSharpCollective.Services.DtoModels;
 using DataBase.DataContext;
-using DataBase.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Session;
 using Services;
+
 
 namespace CSharpCollective.Controllers
 {
@@ -25,16 +26,35 @@ namespace CSharpCollective.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost] 
+       
+
         public IActionResult Login(UserDto user)
         {
             user = loginService.userExists(user);
             if (user==null)
-            {return RedirectToAction("Register", "Register"); }
+            {  
+                TempData["LoginError"] = "User not found.";
+                return View();
+                //return RedirectToAction("Register", "Register"); 
+            }
+            // Session["UserId"] = user.Id;
+
+         
             
-            return View(user);
+            HttpContext.Session.SetString("UserId", user.Id.ToString());
+           
+            return RedirectToAction("MainPage", "MainPage");
         }
 
+        public IActionResult logOut()
+        {
+           
+
+            HttpContext.Session.SetString("UserId", "");
+
+            return RedirectToAction("MainPage", "MainPage");
+        }
 
         //public IActionResult Login(string username, string password)
         //{
@@ -43,10 +63,7 @@ namespace CSharpCollective.Controllers
 
         //}
 
-        public IActionResult Register()
-        {
-            return View();
-        }
+
 
 
     }

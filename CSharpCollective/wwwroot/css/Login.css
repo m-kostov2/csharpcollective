@@ -1,0 +1,46 @@
+﻿body {
+
+  
+}
+
+
+
+
+
+#main {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    min-height: calc(100vh - 100px);
+}
+#main-sidebar {
+    display: none !important;
+}
+
+#login-input {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
+    margin: 0;
+    gap: 0,5rem;
+    list-style: none;
+    color: #EDEDED;
+    border: 1px solid #EDEDED;
+    width: fit-content;
+    padding: 10px;
+    position: center;
+
+#login-input {
+    display: flex;
+    flex-direction: row;
+    justify-items: center;
+    justify-content: center;
+    gap: 0,5rem;
+    list-style: none;   
+    color: #EDEDED;
+}
+
+
+
+
