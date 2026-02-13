@@ -1,6 +1,7 @@
 ﻿body {
 }
 
+
 #main {
     display: flex;
     flex-direction: row;
@@ -9,11 +10,12 @@
     align-items: center;
     height: 65vh;
 }
+
 #main-sidebar {
     display: none !important;
 }
 
-#login-input {
+#register-input {
     display: flex;
     flex-direction: row;
     justify-items: center;
@@ -23,9 +25,9 @@
     gap: 0,5rem;
     list-style: none;
     color: #000000;
-    border: 0.5px solid #EDEDED;
-    border-radius: 0.25rem;
+    border: 1px solid #EDEDED;
     background-color: white;
+    border-radius: 0.25rem;
     width: fit-content;
     padding: 10px;
     position: center;
@@ -43,10 +45,11 @@ button {
 }
 
 
-button:hover{
-    width: 100%;
-    background-color: #DA0037;
-    color: white;
-    border-radius: 0.25rem;
-}
+    button:hover {
+        width: 100%;
+        background-color: #DA0037;
+        color: white;
+        border-radius: 0.25rem;
+    }
+
 

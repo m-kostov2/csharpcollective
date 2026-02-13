@@ -42,7 +42,12 @@ namespace Services
             if (userExists != null)
             {
                 string role = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Role).Single().ToString();   
-
+                string password = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Password).Single().ToString();  
+                if(password != userInfo.Password)
+                {
+                    userDtoInfo.Password = "Wrong Password";
+                    return userDtoInfo;
+                }
                 if (role == "Admin")
                 {
                     userInfo = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => new User

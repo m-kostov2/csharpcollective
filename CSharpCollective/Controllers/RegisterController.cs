@@ -2,6 +2,7 @@
 using CSharpCollective.Services.DtoModels;
 using DataBase.DataContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Services;
 
 namespace CSharpCollective.Controllers
@@ -28,7 +29,7 @@ namespace CSharpCollective.Controllers
         {
             return View();
         }
-
+        [OutputCache(Duration = 10)]
         [HttpPost]
         public IActionResult Register(UserDto user)
         {
@@ -39,7 +40,7 @@ namespace CSharpCollective.Controllers
                 return RedirectToAction("MainPage", "MainPage");
             }
 
-            TempData["RegisterError"] = "Register Error";
+            TempData["RegisterError"] = "User Exists";
             return View();
         }
     }

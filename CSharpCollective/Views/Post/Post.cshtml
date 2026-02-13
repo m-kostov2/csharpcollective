@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CSharpCollective.Services.DtoModels.PostDto>;
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+    var role = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+}
+
+
+
+<partial name="_Sidebar" />
+
+<h2>Posts</h2>
+
+@if (role=="Admin")
+{
+   
+    <a asp-controller="Post" asp-action="Create"  class="btn btn-primary">Create New Post</a>
+}
+
+<hr />
+
+@foreach (var post in Model)
+{
+    <div class="card mb-3 p-3">
+        <h4>@post.Title</h4>
+        <p>@post.Content</p>
+        <p>@post.AuthorName</p>
+
+
+        @if (role == "Admin")
+        {
+            <div>
+
+                @post.AuthorId == userId;
+                <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.Id" class="btn btn-danger btn-sm">Edit</a>
+                <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.Id" class="btn btn-danger btn-sm">Delete</a>
+                
+            </div>
+        }
+    </div>
+}

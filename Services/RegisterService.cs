@@ -44,8 +44,8 @@ namespace Services
             if (userExist!=null)
             {
                
-                _mapper.Map(userRegistered, userDtoInfo);
-                return userDtoInfo;
+              //  _mapper.Map(userRegistered, userDtoInfo);
+                return null;
             }
 
             _context.Users.AddAsync(userRegistered);

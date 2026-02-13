@@ -18,7 +18,7 @@ public class PostDto
         Title = title;
         Content = content;
     }
-
+    public Guid Id { get; set; }
 
     [ForeignKey("AuthorDto")]
     public Guid AuthorId { get; set; }

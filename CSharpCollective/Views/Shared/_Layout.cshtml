@@ -68,30 +68,15 @@
             </div>
         </nav>
     </header>
+    <div>
+    </div>
     <div class="container">
 
-        <div style="display: flex; min-height: calc(100vh - 60px);">
-            @if (userId!="")
-            {
-                <aside style="width: 250px; background: #f4f4f4; border-right: 1px solid #ddd; padding: 20px;">
-                    <ul class="nav flex-column">
-                    <li class="nav-item">
-                      p
-                    </li>
-                    <li class="nav-item">
-                      p
-                    </li>
-                    <li class="nav-item">
-                        p
-                    </li>
-                </ul>
-            </aside>
-            }
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
-
+   
     <footer class="border-top footer text-muted">
         <div class="container">
             &copy; 2026 - CSharpCollective - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>

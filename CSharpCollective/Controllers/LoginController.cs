@@ -2,6 +2,7 @@
 using CSharpCollective.Services.DtoModels;
 using DataBase.DataContext;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.AspNetCore.Session;
 using Services;
 
@@ -19,22 +20,22 @@ namespace CSharpCollective.Controllers
             loginService = new LoginService(context,mapper);
 
         }
-
+        
         [HttpGet]
         public IActionResult Login()
         {       
             return View();
         }
 
-        [HttpPost] 
-       
+        [HttpPost]
 
+        [OutputCache(Duration = 10)]
         public IActionResult Login(UserDto user)
         {
             user = loginService.userExists(user);
             if (user==null)
-            {  
-                TempData["LoginError"] = "User not found.";
+            {   ViewBag.ShowSidebar = false;
+                TempData["LoginError"] = "Wrong password or Username";
                 return View();
                 //return RedirectToAction("Register", "Register"); 
             }
@@ -46,7 +47,7 @@ namespace CSharpCollective.Controllers
            
             return RedirectToAction("MainPage", "MainPage");
         }
-
+        [OutputCache(Duration = 10)]
         public IActionResult logOut()
         {
            

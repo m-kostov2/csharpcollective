@@ -8,13 +8,14 @@
 <link rel="stylesheet" href="~/css/Login.css" asp-append-version="true" />
 <div id="main"> 
 <div id="login-input">
-    <form asp-action="Login" method="post">
+        <form asp-action="Login" method="post" style="display:flex;flex-direction:column;">
         <h1>Sign in</h1>     
         <p>Username</p>
-        <input name="Username" autocomplete />
+        <input name="Username" autocomplete="on" />
         <p>Password</p>
-    <input name="Password" type="password" />
+    <input name="Password" type="password" /> <br />
     <button type="submit">Login</button>
+            @TempData["LoginError"]
     </form>
     </div>
 </div>

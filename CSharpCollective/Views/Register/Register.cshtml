@@ -4,17 +4,20 @@
 
 
 }
-<div>
-    <form asp-action="Register" method="post">
+<link rel="stylesheet" href="~/css/Register.css" asp-append-version="true" />
+<div id="main">
+    <div id="register-input">
+    <form asp-action="Register" method="post" style="display:flex;flex-direction:column;">
         <h1>Sign up</h1>
         <p>Username</p>
         <input name="Username" />
         <p>Email</p>
         <input name="Email" autocomplete="off" />
         <p>Password</p>
-        <input name="Password" type="password" />      
+        <input name="Password" type="password" /> <br />     
         <button type="submit">Register</button>
 
         @TempData["RegisterError"]
     </form>
+</div>
 </div>

@@ -27,8 +27,8 @@ namespace CSharpCollective
 
             builder.Services.AddTransient<LoginService>();
             builder.Services.AddTransient<RegisterService>();
-            builder.Services.AddScoped<CommentService>();
-            builder.Services.AddScoped<PostService>();
+            builder.Services.AddTransient<CommentService>();
+            builder.Services.AddTransient<PostService>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
@@ -76,6 +76,9 @@ namespace CSharpCollective
             app.MapControllerRoute(
               name: "Register",
               pattern: "{controller=Register}/{action=Register}/{id?}");
+            app.MapControllerRoute(
+              name: "Register",
+              pattern: "{controller=Post}/{action=Post}/{id?}");
 
             app.MapRazorPages()
                .WithStaticAssets();
