@@ -26,8 +26,8 @@ public class PostDto
     public string AuthorName { get; set; }
 
     [MinLength(5), MaxLength(Constrains.MaxPostTitleLength)]
-    public string Title { get; private set; }
+    public string Title { get;  set; }
     [MaxLength(Constrains.MaxPostContentLength)]
-    public string Content { get; private set; }
+    public string Content { get; set; } 
 
 }

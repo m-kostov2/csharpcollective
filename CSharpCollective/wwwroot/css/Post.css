@@ -1,4 +1,20 @@
 ﻿body {
 }
+.main {
+    display:flex;
+}
+.create-Form {
+    display: flex;
+    flex-direction: column;
+}
 
+.form-control {
+    width:50vh;
 
+}
+
+    .form-control:nth-child(4) {
+        width: 50vh;
+        height: 30vh;
+        
+    }

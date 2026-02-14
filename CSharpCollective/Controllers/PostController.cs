@@ -1,8 +1,7 @@
 ﻿using AutoMapper;
+using CSharpCollective.Services;
 using CSharpCollective.Services.DtoModels;
 using DataBase.DataContext;
-using DataBase.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
@@ -13,60 +12,66 @@ namespace CSharpCollective.Controllers
 {
     public class PostController : Controller
     {
-        private PostService postService;
+        private PostService _postService;
+        private LogCheck _logCheck;
 
-        public PostController(CollectiveContext context, IMapper mapper)
+
+        public PostController(CollectiveContext context, IMapper mapper, LogCheck logCheck)
         {
 
 
-            postService = new PostService(context, mapper);
+            _postService = new PostService(context, mapper);
+            this._logCheck = logCheck;
 
         }
 
 
-
+        [HttpGet]
         public IActionResult Post()
         {
-            var posts = postService.GetAll();
+            var posts = _postService.GetAll();
 
-            if (!posts.Any())
-                return RedirectToAction("Create"); 
+            if (posts.Count().Equals(0))
+                return RedirectToAction("Create");
 
-            return View(posts); 
+            return View(posts);
         }
 
-       
+        [HttpGet]
         public IActionResult Create()
         {
-            return View("CreatePost"); 
+            return View("CreatePost");
         }
 
-        
+        [HttpPost]
         public IActionResult Create(PostDto post)
         {
             string userIdString = HttpContext.Session.GetString("UserId");
-            if (string.IsNullOrEmpty(userIdString))
-                return Unauthorized();
-
             post.AuthorId = Guid.Parse(userIdString);
-            postService.Create(post);
 
-            return RedirectToAction("Post"); 
+            var postVerified = _postService.Create(post);
+            if (postVerified == null)
+            {
+                TempData["ErrorMessage"] = "Title or content exceeds maximum length of 100 and 2000 or one of them is empty. Please try again.";
+                return RedirectToAction("Create");
+            }
+
+            return RedirectToAction("Post");
         }
 
         public IActionResult Edit(PostDto post)
         {
-       postService.Edit(post);
+            _postService.Edit(post);
 
 
-            return View("Edit", post); 
+            return View("Edit", post);
         }
 
-    
+
         public IActionResult Delete(Guid id)
         {
-             postService.Delete(id);
-          
+            _postService.Delete(id);
+
 
             return RedirectToAction("Post"); // Back to list
         }

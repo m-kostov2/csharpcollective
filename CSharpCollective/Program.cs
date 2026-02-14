@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using Services;
 using Services.ConfigMap;
 using AutoMapper;
+using DataBase.ModelConstrains;
+using CSharpCollective.Services;
 
 
 namespace CSharpCollective
@@ -28,7 +30,8 @@ namespace CSharpCollective
             builder.Services.AddTransient<LoginService>();
             builder.Services.AddTransient<RegisterService>();
             builder.Services.AddTransient<CommentService>();
-            builder.Services.AddTransient<PostService>();
+            builder.Services.AddTransient<PostService>();    
+            builder.Services.AddTransient<LogCheck>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();

@@ -9,13 +9,13 @@
 
 <link rel="stylesheet" href="~/css/MainPage.css" asp-append-version="true" />
 <div id="main">
-    <div class="aside" style="display: flex; min-height: calc(100vh - 60px);">
+    <div class="aside" >
 
 
         @if (userId!= "")
         {
             <!-- <partial name="_Sidebar" />-->
-            <aside class="aside" style="width: 250px; background: #DA0037; display: flex; min-height: calc(100vh - 60px);">
+            <aside class="aside" >
                 <ul class="nav flex-column">
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Post">Posts</a>

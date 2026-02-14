@@ -31,17 +31,25 @@ namespace Services
 
 
             Post postInfo = new Post();
+            string title = Datarecieved.Title;
+            string content = Datarecieved.Content;
+
+            if (title == null & content == null || title.Length > 100 & content.Length > 2000 & title.Length <= 0)
+            {
+                return null; 
+            }
 
             _mapper.Map(Datarecieved, postInfo);
 
-            var postExists = _context.Posts.SingleOrDefault(p => p.Id == postInfo.Id);
+            var postExists = _context.Posts.Any(p => p.Id == postInfo.Id);
             if (postExists != null)
             {
                 string authorName = _context.Users.Where(u => u.Id == postInfo.AuthorId).Select(u => u.UserName).FirstOrDefault();
                 _context.Posts.Add(postInfo);
+                _context.SaveChanges();
             }
 
-           _context.SaveChanges();
+           
             PostDto postDtoInfo = new PostDto();
            
 
