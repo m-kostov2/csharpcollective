@@ -9,28 +9,18 @@
 
 <link rel="stylesheet" href="~/css/MainPage.css" asp-append-version="true" />
 <div id="main">
-    <div class="aside" >
+    @if (userId != "" || userId != null)
+    {
+        <div class="aside">
 
 
-        @if (userId!= "")
-        {
-            <!-- <partial name="_Sidebar" />-->
-            <aside class="aside" >
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Post">Posts</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Category" asp-action="Category">Categories</a>
-                    </li>
-                    <li class="nav-item">
-                    </li>
-                </ul>
-            </aside>
-        }
-      
-    </div>
 
+           <partial name="_Sidebar" />
+           
+
+
+        </div>
+    }
     <div class="mainPage">
     </div>
 

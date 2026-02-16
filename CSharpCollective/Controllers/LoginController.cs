@@ -11,13 +11,14 @@ namespace CSharpCollective.Controllers
 {
     public class LoginController : Controller
     {       
-        private LoginService loginService;
+        private LoginService _loginService;
+      
 
         public LoginController(CollectiveContext context,IMapper mapper)
         {
                 
             
-            loginService = new LoginService(context,mapper);
+            _loginService = new LoginService(context,mapper);
 
         }
         
@@ -32,7 +33,7 @@ namespace CSharpCollective.Controllers
         [OutputCache(Duration = 10)]
         public IActionResult Login(UserDto user)
         {
-            user = loginService.userExists(user);
+            user = _loginService.userExists(user);
             if (user==null)
             {   ViewBag.ShowSidebar = false;
                 TempData["LoginError"] = "Wrong password or Username";

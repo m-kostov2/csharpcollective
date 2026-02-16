@@ -20,7 +20,7 @@ namespace Services
 
         public LoginService(CollectiveContext context, IMapper mapper)
         {
-            _context =context;
+            _context = context;
             _mapper = mapper;
 
         }

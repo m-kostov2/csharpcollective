@@ -14,10 +14,16 @@ namespace Services.ConfigMap
         public CollectiveProfile()
         {
 
-            this.CreateMap<UserDto, User>();
+            this.CreateMap<UserDto, User>()
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
+                
             this.CreateMap<User, UserDto>()
                 .ForMember(dest=>dest.Role,opt=>opt.MapFrom(src=>src.Role))
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
+                .ForAllMembers(opt=>opt.Ignore());;
 
             this.CreateMap<CommentDto, Comment>()
                 .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
@@ -28,9 +34,10 @@ namespace Services.ConfigMap
             this.CreateMap<PostDto, Post>()
                 .ForCtorParam("title", opt => opt.MapFrom(src => src.Title))
                 .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id)); ;
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
 
-
+            this.CreateMap<Post, PostDto>()            
+               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
 
 
             this.CreateMap<TagDto, Tag>()

@@ -48,7 +48,7 @@ namespace CSharpCollective
             var db = scope.ServiceProvider.GetRequiredService<CollectiveContext>();
             db.Database.EnsureCreated();
 
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -63,7 +63,7 @@ namespace CSharpCollective
 
             app.UseHttpsRedirection();
             app.UseRouting();
-
+            
             app.UseAuthorization();
 
             app.MapStaticAssets();

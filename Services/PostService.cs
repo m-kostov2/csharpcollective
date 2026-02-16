@@ -79,7 +79,7 @@ namespace Services
         public IEnumerable<PostDto> GetAll()
         {
             var posts = _context.Posts.ToList();
-            var postDtos = _mapper.Map<List<PostDto>>(posts);
+            var postDtos = _mapper.Map<List<Post>,List<PostDto>>(posts);
             return postDtos;
         }
 

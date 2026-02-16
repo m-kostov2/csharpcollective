@@ -13,15 +13,15 @@ namespace CSharpCollective.Controllers
     public class PostController : Controller
     {
         private PostService _postService;
-        private LogCheck _logCheck;
+     
 
 
-        public PostController(CollectiveContext context, IMapper mapper, LogCheck logCheck)
+        public PostController(CollectiveContext context, IMapper mapper)
         {
 
 
             _postService = new PostService(context, mapper);
-            this._logCheck = logCheck;
+            
 
         }
 
