@@ -18,12 +18,12 @@ namespace Services.ConfigMap
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
-                
+
             this.CreateMap<User, UserDto>()
-                .ForMember(dest=>dest.Role,opt=>opt.MapFrom(src=>src.Role))
+                .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName))
-                .ForAllMembers(opt=>opt.Ignore());;
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
+               // .ForAllMembers(opt=>opt.Ignore());;
 
             this.CreateMap<CommentDto, Comment>()
                 .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
