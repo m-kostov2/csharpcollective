@@ -45,7 +45,8 @@ namespace CSharpCollective.Controllers
          
             
             HttpContext.Session.SetString("UserId", user.Id.ToString());
-           
+            HttpContext.Session.SetString("UserRole", user.Role);
+
             return RedirectToAction("MainPage", "MainPage");
         }
         [OutputCache(Duration = 10)]

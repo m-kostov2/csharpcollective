@@ -13,7 +13,7 @@ namespace CSharpCollective.Controllers
     public class PostController : Controller
     {
         private PostService _postService;
-     
+
 
 
         public PostController(CollectiveContext context, IMapper mapper)
@@ -21,7 +21,7 @@ namespace CSharpCollective.Controllers
 
 
             _postService = new PostService(context, mapper);
-            
+
 
         }
 
@@ -59,6 +59,14 @@ namespace CSharpCollective.Controllers
             return RedirectToAction("Post");
         }
 
+        //[HttpGet]
+        //public IActionResult Edit()
+        //{
+
+        //    return View("Edit");
+        //}
+
+        //[HttpPost]
         public IActionResult Edit(PostDto post)
         {
             _postService.Edit(post);

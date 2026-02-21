@@ -4,23 +4,25 @@
 @{
 }
 @model CSharpCollective.Services.DtoModels.PostDto;
+<div class="main">
+    <partial name="_Sidebar" />
+    
+        <h2>Edit Post</h2>
 
-<partial name="_Sidebar" />
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div>
+                <label>Title</label>
+                <input asp-for="Title" class="form-control" />
+            </div>
 
-<h2>Edit Post</h2>
+            <div>
+                <label>Content</label>
+                <textarea asp-for="Content" class="form-control"></textarea>
+            </div>
 
-<form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-success mt-2">Save</button>
+        </form>
+    
 
-    <div>
-        <label>Title</label>
-        <input asp-for="Title" class="form-control" />
-    </div>
-
-    <div>
-        <label>Content</label>
-        <textarea asp-for="Content" class="form-control"></textarea>
-    </div>
-
-    <button type="submit" class="btn btn-success mt-2">Save</button>
-</form>
+</div>
