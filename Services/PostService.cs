@@ -83,6 +83,15 @@ namespace Services
             return postDtos;
         }
 
+        public PostDto GetById(Guid id)
+        {
+            
+            Post post = _context.Posts.SingleOrDefault(p => p.Id == id);
+            PostDto postDto = _mapper.Map<Post, PostDto>(post);
 
+            return postDto;
+
+
+        }
     }
 }

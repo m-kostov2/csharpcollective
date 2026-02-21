@@ -2,6 +2,7 @@
 using CSharpCollective.Services;
 using CSharpCollective.Services.DtoModels;
 using DataBase.DataContext;
+using DataBase.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.EntityFrameworkCore;
@@ -58,21 +59,21 @@ namespace CSharpCollective.Controllers
 
             return RedirectToAction("Post");
         }
-
-        //[HttpGet]
-        //public IActionResult Edit()
-        //{
-
-        //    return View("Edit");
-        //}
-
-        //[HttpPost]
-        public IActionResult Edit(PostDto post)
+        //Ninject ,Casstle Windsor
+        [HttpGet]
+        public IActionResult Edit()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Guid Id)
+        {
+            PostDto post = _postService.GetById(Id);
             _postService.Edit(post);
+            ;
 
-
-            return View("Edit", post);
+            return RedirectToAction("Post");
         }
 
 
