@@ -76,6 +76,8 @@ namespace DataBase.DataContext
               .HasForeignKey(p => p.AuthorId)
               .OnDelete(DeleteBehavior.NoAction);
 
+
+
             modelBuilder.Entity<User>()
                 .HasMany(u => u.Comments)
                 .WithOne(c => c.Author)

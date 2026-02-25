@@ -34,7 +34,7 @@ namespace CSharpCollective.Controllers
         public IActionResult Login(UserDto user)
         {
             user = _loginService.userExists(user);
-            if (user==null)
+            if (user==null || user.Password == "Wrong Password")
             {   ViewBag.ShowSidebar = false;
                 TempData["LoginError"] = "Wrong password or Username";
                 return View();

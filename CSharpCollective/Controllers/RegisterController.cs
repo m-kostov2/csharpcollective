@@ -37,6 +37,7 @@ namespace CSharpCollective.Controllers
             if (user != null)
             {
                 HttpContext.Session.SetString("UserId", user.Id.ToString());
+                HttpContext.Session.SetString("UserRole", user.Role);
                 return RedirectToAction("MainPage", "MainPage");
             }
 

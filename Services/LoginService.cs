@@ -45,7 +45,7 @@ namespace Services
                 string password = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Password).Single().ToString();  
                 if(password != userInfo.Password)
                 {
-                    userDtoInfo.Password = "Wrong Password";
+                    userDtoInfo.Password = "Wrong Password";                    
                     return userDtoInfo;
                 }
                 if (role == "Admin")
@@ -136,7 +136,7 @@ namespace Services
             }
             else if (userExists == null)
             {
-                userInfo = null;
+                userInfo = null;               
                 return userInfo;
             }
 

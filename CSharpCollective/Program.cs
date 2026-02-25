@@ -82,7 +82,9 @@ namespace CSharpCollective
             app.MapControllerRoute(
               name: "Post",
               pattern: "{controller=Post}/{action=Post}");
-          
+            app.MapControllerRoute(
+                name: "Post",
+                pattern: "{controller=Post}/{action=Edit}/{id?}");
 
             app.MapRazorPages()
                .WithStaticAssets();

@@ -1,31 +1,25 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿
 @model CSharpCollective.Services.DtoModels.PostDto;
+<link rel="stylesheet" href="~/css/Post.css" asp-append-version="true" />
 <div class="main">
     <partial name="_Sidebar" />
+    <div class="editFrom">
+        <h2>Edit</h2>
+        <div>
+            <form asp-action="Edit" method="post">
 
-    <h2>Edit Post</h2>
+                <label>Title</label>
+                <textarea name="Title" class="form-control">@Model.Title</textarea>              
+                <label>Content</label>
+                <textarea name="Content" class="form-control">@Model.Content</textarea>
 
-    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" style="display:flex;flex-direction:column;">
-        <h1>Edit</h1>
-        <p>Title</p>
-        <input name="Title" />
-        <p>Content</p>
-        <input name="Content" /> <br />
-        <button type="submit">Save</button>
-    </form>
-   
-
+                <button type="submit" class="btn btn-success mt-2">Save</button>
+            </form>
+        </div>
+    </div>
 </div>
 
-
-
-<!--
-<input type="hidden" asp-for="Id" />
-method="post"
+@TempData["EditError"]
 
 
 
@@ -38,20 +32,6 @@ method="post"
 
 
 
-      <div>
-            <label>Title</label>
-            <input asp-for="Title" class="form-control" />
-
-        </div>
-
-        <div>
-            <label>Content</label>
-            <textarea asp-for="Content" class="form-control"></textarea>
-
-        </div>
-
-        <button type="submit" class="btn btn-success mt-2">Save</button>
-    </form>
 
 
 
