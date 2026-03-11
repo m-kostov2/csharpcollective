@@ -17,14 +17,15 @@ namespace DataBase.Models
 
         public Category(string Name)
         {
+               this.Id = Guid.NewGuid();
                this.Posts = new HashSet<Post>();
                this.Name = Name;
         }
         [Key]
-        public int Id { get;  set; }
+        public Guid Id { get;  set; }
         [MaxLength(Constrains.MaxCategoryNameLength)]
         public string Name { get; set; }
 
-        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Post>? Posts { get; set; }
     }
 }

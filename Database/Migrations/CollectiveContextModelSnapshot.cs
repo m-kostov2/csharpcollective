@@ -17,7 +17,7 @@ namespace Database.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.11")
+                .HasAnnotation("ProductVersion", "9.0.12")
                 .HasAnnotation("Proxies:ChangeTracking", false)
                 .HasAnnotation("Proxies:CheckEquality", false)
                 .HasAnnotation("Proxies:LazyLoading", true)
@@ -27,17 +27,21 @@ namespace Database.Migrations
 
             modelBuilder.Entity("DataBase.Models.Category", b =>
                 {
-                    b.Property<int>("Guid")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Guid"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
-                    b.HasKey("Guid");
+                    b.Property<Guid?>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
 
                     b.ToTable("Categories");
                 });
@@ -53,7 +57,8 @@ namespace Database.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -74,22 +79,21 @@ namespace Database.Migrations
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("CategoryGuid")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CategoryGuid1")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid?>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
@@ -98,9 +102,7 @@ namespace Database.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("CategoryGuid");
-
-                    b.HasIndex("CategoryGuid1");
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Posts");
                 });
@@ -113,7 +115,8 @@ namespace Database.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
@@ -131,40 +134,28 @@ namespace Database.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("LastOnline")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Database.Models.PostTag", b =>
-                {
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("TagId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("PostId", "TagId");
-
-                    b.HasIndex("TagId");
-
-                    b.ToTable("PostTags");
                 });
 
             modelBuilder.Entity("PostTag", b =>
@@ -180,6 +171,14 @@ namespace Database.Migrations
                     b.HasIndex("TagsId");
 
                     b.ToTable("PostTag");
+                });
+
+            modelBuilder.Entity("DataBase.Models.Category", b =>
+                {
+                    b.HasOne("DataBase.Models.Post", null)
+                        .WithMany("Categories")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("DataBase.Models.Comment", b =>
@@ -203,38 +202,10 @@ namespace Database.Migrations
 
                     b.HasOne("DataBase.Models.Category", null)
                         .WithMany("Posts")
-                        .HasForeignKey("CategoryGuid")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataBase.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryGuid1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Author");
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Database.Models.PostTag", b =>
-                {
-                    b.HasOne("DataBase.Models.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("DataBase.Models.Tag", "Tag")
-                        .WithMany()
-                        .HasForeignKey("TagId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-
-                    b.Navigation("Tag");
                 });
 
             modelBuilder.Entity("PostTag", b =>
@@ -255,6 +226,11 @@ namespace Database.Migrations
             modelBuilder.Entity("DataBase.Models.Category", b =>
                 {
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("DataBase.Models.Post", b =>
+                {
+                    b.Navigation("Categories");
                 });
 
             modelBuilder.Entity("DataBase.Models.User", b =>

@@ -14,14 +14,16 @@ using System.Threading.Tasks;
 namespace DataBase.DataContext
 {
     public class CollectiveContext : DbContext
-    {
-
+    {   
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Post> Posts { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
-        public virtual DbSet<Category> Categories { get; set; }
-       // public virtual DbSet<PostTag> PostTags { get; set; }
+        
+        
+       
+       
 
 
        
@@ -93,22 +95,18 @@ namespace DataBase.DataContext
             .WithOne()
             .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Post>()
+            .HasMany(c => c.Tags)
+            .WithOne()
+            .OnDelete(DeleteBehavior.NoAction);
 
-          //  modelBuilder.Entity<PostTag>()
-          //.HasKey(pt => new { pt.PostId, pt.TagId });
 
-          //  modelBuilder.Entity<PostTag>()
-          //      .HasOne(pt => pt.Post)
-          //      .WithMany()
-          //      .HasForeignKey(pt => pt.PostId)
-          //      .OnDelete(DeleteBehavior.NoAction);
-
-          //  modelBuilder.Entity<PostTag>()
-          //      .HasOne(pt => pt.Tag)
-          //      .WithMany()
-          //      .HasForeignKey(pt => pt.TagId)
-          //      .OnDelete(DeleteBehavior.NoAction);
-
+            modelBuilder.Entity<Post>
+                ().Navigation(p => p.Categories)
+                .UsePropertyAccessMode(PropertyAccessMode.Property);
+            modelBuilder.Entity<Post>
+               ().Navigation(p => p.Tags)
+               .UsePropertyAccessMode(PropertyAccessMode.Property);
 
 
         }

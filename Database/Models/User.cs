@@ -36,7 +36,7 @@ namespace DataBase.Models
         public  DateTime CreatedAt { get; set; }
         public DateTime LastOnline { get; set; }
 
-        public virtual ICollection<Comment>? Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         public virtual ICollection<Post>? Posts { get; set; }
 
