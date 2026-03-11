@@ -3,9 +3,11 @@ using CSharpCollective.Services.DtoModels;
 using DataBase.DataContext;
 using DataBase.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,13 +33,7 @@ namespace Services
 
 
             Post postInfo = new Post();
-            string title = Datarecieved.Title;
-            string content = Datarecieved.Content;
-
-            if (title == null & content == null || title.Length > 100 & content.Length > 2000 & title.Length <= 0)
-            {
-                return null; 
-            }
+           
 
             _mapper.Map(Datarecieved, postInfo);
 
@@ -49,9 +45,9 @@ namespace Services
                 _context.SaveChanges();
             }
 
-           
+
             PostDto postDtoInfo = new PostDto();
-           
+
 
             return postDtoInfo;
 
@@ -59,10 +55,17 @@ namespace Services
         public void Edit(PostDto Datarecieved)
         {
 
+            string title = Datarecieved.Title;
+            string content = Datarecieved.Content;
+            if (title == null & content == null || title.Length > 100 & content.Length > 2000 & title.Length <= 0)
+            {
+                Datarecieved = null;
+            }
+
 
             Post postInfo = new Post();
-            postInfo = _context.Posts.SingleOrDefault(p => p.Id == Datarecieved.Id);
-            
+            postInfo = _context.Posts.Where(p => p.Id == Datarecieved.Id).Single();
+            Datarecieved.AuthorId = postInfo.AuthorId;
             _mapper.Map(Datarecieved, postInfo);
             _context.SaveChanges();
 
@@ -70,27 +73,50 @@ namespace Services
         public void Delete(Guid Id)
         {
             Post postInfo = new Post();
-             postInfo = _context.Posts.SingleOrDefault(p => p.Id == Id);
-            
-             _context.Posts.Remove(postInfo);
+            postInfo = _context.Posts.SingleOrDefault(p => p.Id == Id);
+
+            _context.Posts.Remove(postInfo);
             _context.SaveChanges();
         }
 
         public IEnumerable<PostDto> GetAll()
         {
-            var posts = _context.Posts.ToList();
-            var postDtos = _mapper.Map<List<Post>,List<PostDto>>(posts);
+            var posts = _context.Posts.Select(n => new Post
+            {
+                Id=n.Id,
+                Title=n.Title,
+                Content=n.Content,    
+                AuthorId =n.AuthorId
+            }
+                ).ToList();
+            var postDtos = _mapper.Map<List<Post>, List<PostDto>>(posts);
             return postDtos;
         }
 
         public PostDto GetById(Guid id)
         {
-            
+
             Post post = _context.Posts.SingleOrDefault(p => p.Id == id);
             PostDto postDto = _mapper.Map<Post, PostDto>(post);
 
             return postDto;
 
+
+        }
+
+        public PostDto PostCheck(PostDto Datarecieved)
+        {
+            PostDto postDto = new PostDto();
+            postDto = Datarecieved;
+            string title = Datarecieved.Title;
+            string content = Datarecieved.Content;
+
+            if (title.IsNullOrEmpty() & content.IsNullOrEmpty() || title.Length > 100 & content.Length > 2000 & title.Length <= 0)
+            {
+                return null;
+            }
+
+            return postDto;
 
         }
     }

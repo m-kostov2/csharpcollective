@@ -50,31 +50,52 @@ namespace CSharpCollective.Controllers
             string userIdString = HttpContext.Session.GetString("UserId");
             post.AuthorId = Guid.Parse(userIdString);
 
-            var postVerified = _postService.Create(post);
-            if (postVerified == null)
+            var postCheck = _postService.PostCheck(post);
+            if (postCheck == null)
             {
                 TempData["ErrorMessage"] = "Title or content exceeds maximum length of 100 and 2000 or one of them is empty. Please try again.";
                 return RedirectToAction("Create");
             }
+            _postService.Create(post);
 
             return RedirectToAction("Post");
         }
         //Ninject ,Casstle Windsor
+
+
         [HttpGet]
-        public IActionResult Edit()
+        public IActionResult Edit(Guid id)
         {
-            return View();
+
+            var post = _postService.GetById(id);
+            if (post == null)
+            {
+                return NotFound();
+
+            }
+            return View("Edit",post);
         }
 
-        [HttpPost]
-        public IActionResult Edit(Guid Id)
+        public IActionResult Edit(PostDto post)
         {
-            PostDto post = _postService.GetById(Id);
-            _postService.Edit(post);
-            ;
 
+            
+
+            var postCheck = _postService.PostCheck(post);
+            if (postCheck == null)
+            {
+                TempData["EditError"] = "Title or content exceeds maximum length of 100 and 2000 or one of them is empty. Please try again.";
+                return RedirectToAction("Edit");
+            }
+              _postService.Edit(post);
             return RedirectToAction("Post");
         }
+
+
+
+
+
+
 
 
         public IActionResult Delete(Guid id)
