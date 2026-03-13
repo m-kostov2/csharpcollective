@@ -97,18 +97,18 @@ namespace DataBase.DataContext
             .WithOne()
             .OnDelete(DeleteBehavior.NoAction);
 
+
             modelBuilder.Entity<Post>()
-            .HasMany(c => c.Tags)
-            .WithOne()
-            .OnDelete(DeleteBehavior.NoAction);
+           .HasMany(e => e.Tags)
+           .WithMany(e => e.Posts);
 
 
-            modelBuilder.Entity<Post>
-                ().Navigation(p => p.Categories)
-                .UsePropertyAccessMode(PropertyAccessMode.Property);
-            modelBuilder.Entity<Post>
-               ().Navigation(p => p.Tags)
-               .UsePropertyAccessMode(PropertyAccessMode.Property);
+            //modelBuilder.Entity<Post>
+            //    ().Navigation(p => p.Categories)
+            //    .UsePropertyAccessMode(PropertyAccessMode.Property);
+            //modelBuilder.Entity<Post>
+            //   ().Navigation(p => p.Tags)
+            //   .UsePropertyAccessMode(PropertyAccessMode.Property);
 
 
         }

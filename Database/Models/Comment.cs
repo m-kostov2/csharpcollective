@@ -22,6 +22,7 @@ namespace DataBase.Models
             this.CreatedAt = DateTime.UtcNow;
         }
         [Key]
+        [Required]
         public Guid Id { get;  set; }
         public Guid AuthorId { get;  set; }
         public virtual User Author { get; set; } = null!;

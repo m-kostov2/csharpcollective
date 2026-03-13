@@ -24,6 +24,7 @@ namespace DataBase.Models
             Posts = new HashSet<Post>();
         }
         [Key]
+        [Required]
         public Guid Id { get; set; }
         [MinLength(5), MaxLength(Constrains.MaxTagNameLength)]
         public string Name { get; set; }

@@ -22,6 +22,7 @@ namespace DataBase.Models
                this.Name = Name;
         }
         [Key]
+        [Required]
         public Guid Id { get;  set; }
         [MaxLength(Constrains.MaxCategoryNameLength)]
         public string Name { get; set; }
