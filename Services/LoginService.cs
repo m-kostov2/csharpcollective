@@ -17,10 +17,10 @@ namespace Services
         private CollectiveContext _context;
         private readonly IMapper _mapper;
 
-
-        public LoginService(CollectiveContext context, IMapper mapper)
+//CollectiveContext context,
+        public LoginService( IMapper mapper)
         {
-            _context = context;
+            _context = new CollectiveContext();
             _mapper = mapper;
 
         }

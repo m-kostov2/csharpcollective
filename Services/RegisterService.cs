@@ -27,8 +27,8 @@ namespace Services
         public RegisterService(CollectiveContext context, IMapper mapper)
         {
             _context = context;
-            _mapper = mapper;
-            loginservice = new LoginService(context, mapper);
+            _mapper = mapper;//context,
+            loginservice = new LoginService( mapper);
 
         }
 
