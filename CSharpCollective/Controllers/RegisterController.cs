@@ -13,11 +13,11 @@ namespace CSharpCollective.Controllers
         private RegisterService registerService;
         
 
-        public RegisterController(CollectiveContext context, IMapper mapper)
+        public RegisterController(IMapper mapper)
         {
 
 
-            registerService = new RegisterService(context, mapper);
+            registerService = new RegisterService( mapper);
 
         }
 

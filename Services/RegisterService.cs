@@ -24,11 +24,11 @@ namespace Services
 
 
 
-        public RegisterService(CollectiveContext context, IMapper mapper)
+        public RegisterService(IMapper mapper)
         {
-            _context = context;
-            _mapper = mapper;//context,
-            loginservice = new LoginService( mapper);
+            _context = new CollectiveContext();
+            _mapper = mapper;
+            loginservice = new LoginService(mapper);
 
         }
 

@@ -14,11 +14,9 @@ namespace CSharpCollective.Controllers
         private LoginService _loginService;
       
 
-//CollectiveContext context,
+
         public LoginController(IMapper mapper)
-        {
-                
-           // context,
+        {                  
             _loginService = new LoginService(mapper);
 
         }

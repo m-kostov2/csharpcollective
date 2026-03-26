@@ -6,6 +6,7 @@ using AutoMapper;
 using CSharpCollective.Services.DtoModels;
 using DataBase.DataContext;
 using DataBase.Models;
+using Microsoft.EntityFrameworkCore;
 using Services.ConfigMap;
 
 
@@ -17,7 +18,7 @@ namespace Services
         private CollectiveContext _context;
         private readonly IMapper _mapper;
 
-//CollectiveContext context,
+
         public LoginService( IMapper mapper)
         {
             _context = new CollectiveContext();

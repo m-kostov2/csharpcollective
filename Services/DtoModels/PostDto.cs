@@ -28,6 +28,7 @@ public class PostDto
     [MinLength(5), MaxLength(Constrains.MaxPostTitleLength)]
     public string Title { get;  set; }
     [MaxLength(Constrains.MaxPostContentLength)]
-    public string Content { get; set; } 
+    public string Content { get; set; }
+ //   public DateTime UpdatedAt { get; set; }
 
 }

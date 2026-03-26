@@ -17,11 +17,11 @@ namespace CSharpCollective.Controllers
 
 
 
-        public PostController(CollectiveContext context, IMapper mapper)
+        public PostController(IMapper mapper)
         {
 
 
-            _postService = new PostService(context, mapper);
+            _postService = new PostService(mapper);
 
 
         }

@@ -23,13 +23,11 @@ namespace DataBase.Models
             this.Title = title;
             this.Content = content;
             this.CreatedAt = DateTime.UtcNow;
-            Tags = new HashSet<Tag>();
-            Categories = new HashSet<Category>();
+            this.Tags = new HashSet<Tag>();
+            this.Categories = new HashSet<Category>();
         }
         [Key]
-        [Required]
         public Guid Id { get;  set; }
-
 
         [ForeignKey("Author")]
         public Guid AuthorId { get; set; }

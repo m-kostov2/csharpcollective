@@ -19,9 +19,9 @@ namespace Services
         private readonly IMapper _mapper;
 
 
-        public PostService(CollectiveContext context, IMapper mapper)
+        public PostService(IMapper mapper)
         {
-            _context = context;
+            _context = new CollectiveContext();
             _mapper = mapper;
 
         }
@@ -32,21 +32,21 @@ namespace Services
         {
 
 
-            Post postInfo = new Post();
+            Post postInfo = new Post(Datarecieved.Title,Datarecieved.Content);
            
-
+           
             _mapper.Map(Datarecieved, postInfo);
 
             var postExists = _context.Posts.Any(p => p.Id == postInfo.Id);
             if (postExists != null)
             {
                 string authorName = _context.Users.Where(u => u.Id == postInfo.AuthorId).Select(u => u.UserName).FirstOrDefault();
-                _context.Posts.Add(postInfo);
+                _context.Posts.AddAsync(postInfo);
                 _context.SaveChanges();
             }
+            PostDto postDtoInfo = new PostDto(postInfo.Title,postInfo.Content);
 
-
-            PostDto postDtoInfo = new PostDto();
+            
 
 
             return postDtoInfo;
@@ -66,8 +66,9 @@ namespace Services
             Post postInfo = new Post();
             postInfo = _context.Posts.Where(p => p.Id == Datarecieved.Id).Single();
             Datarecieved.AuthorId = postInfo.AuthorId;
+          //  Datarecieved.UpdatedAt = DateTime.Now;
             _mapper.Map(Datarecieved, postInfo);
-            _context.SaveChanges();
+            _context.SaveChangesAsync();
 
         }
         public void Delete(Guid Id)

@@ -34,12 +34,13 @@ namespace Services.ConfigMap
             this.CreateMap<PostDto, Post>()
                 .ForCtorParam("title", opt => opt.MapFrom(src => src.Title))
                 .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+
+
+            this.CreateMap<Post, PostDto>()              
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
 
-            this.CreateMap<Post, PostDto>()
-               .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-               .ForMember(dest => dest.AuthorId, opt => opt.MapFrom(src => src.AuthorId))
-               .ForMember(dest => dest.Author, opt => opt.MapFrom(src => src.Author));
                
 
 
