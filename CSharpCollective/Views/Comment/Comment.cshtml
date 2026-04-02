@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CSharpCollective.Services.DtoModels.CommentDto>;
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
+    var role = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+    
+}
+<link rel="stylesheet" href="~/css/Post.css" asp-append-version="true" />
+
+<div class="main">
+
+
+    <partial name="_Sidebar" />
+    <div class="posts">
+        <h2>Posts</h2>
+
+     
+        <a asp-controller="Comment" asp-action="Create" class="btn btn-primary">Create New Comment</a>
+
+
+
+        @foreach (var comment in Model)
+        {
+            <div class="card mb-3 p-3">
+                <p>@comment.AuthorName</p>
+                <a>@comment.Content</a>
+
+
+
+                @if (role == "Admin")
+                {
+                    <div>
+                        <p>@comment.Content == Content</p>
+                        <p>@comment.AuthorId == userId</p>
+                        <a asp-controller="Post" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-sm">Delete</a>
+
+                    </div>
+                }
+            </div>
+
+        }
+
+
+
+    </div>
+</div>

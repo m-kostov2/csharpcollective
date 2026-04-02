@@ -1,23 +1,23 @@
 ﻿body {
 }
+
 .main {
-    display:flex;
-    flex-direction:row;
+    display: flex;
+    flex-direction: row;
 }
+
 .create-Form {
     display: flex;
     flex-direction: column;
 }
 
 .form-control {
-    width:50vh;
-
+    width: 50vh;
 }
 
     .form-control:nth-child(4) {
         width: 50vh;
         height: 30vh;
-        
     }
 
 #temp {
@@ -25,14 +25,14 @@
     height: fit-content;
     width: 40%;
 }
-#temp p{
-    padding: 1em;
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    height: fit-content;
-   
-}
+
+    #temp p {
+        padding: 1em;
+        background-color: red;
+        color: white;
+        font-weight: bold;
+        height: fit-content;
+    }
 
 .dataForm {
     display: flex;
@@ -40,6 +40,8 @@
 }
 
 .createForm {
-    padding-left:1em;
+    padding-left: 1em;
 }
 
+body {
+}

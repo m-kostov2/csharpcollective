@@ -19,11 +19,7 @@ namespace CSharpCollective.Controllers
 
         public PostController(IMapper mapper)
         {
-
-
             _postService = new PostService(mapper);
-
-
         }
 
 
@@ -73,13 +69,13 @@ namespace CSharpCollective.Controllers
                 return NotFound();
 
             }
-            return View("Edit",post);
+            return View("Edit", post);
         }
 
         public IActionResult Edit(PostDto post)
         {
 
-            
+
 
             var postCheck = _postService.PostCheck(post);
             if (postCheck == null)
@@ -87,16 +83,9 @@ namespace CSharpCollective.Controllers
                 TempData["EditError"] = "Title or content exceeds maximum length of 100 and 2000 or one of them is empty. Please try again.";
                 return RedirectToAction("Edit");
             }
-              _postService.Edit(post);
+            _postService.Edit(post);
             return RedirectToAction("Post");
         }
-
-
-
-
-
-
-
 
         public IActionResult Delete(Guid id)
         {
@@ -105,52 +94,6 @@ namespace CSharpCollective.Controllers
 
             return RedirectToAction("Post"); // Back to list
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -206,30 +149,6 @@ namespace CSharpCollective.Controllers
 
         //    return RedirectToAction("Post");
         //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

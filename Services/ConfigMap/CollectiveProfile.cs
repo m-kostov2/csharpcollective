@@ -23,11 +23,16 @@ namespace Services.ConfigMap
                 .ForMember(dest => dest.Role, opt => opt.MapFrom(src => src.Role))
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.UserName));
-               // .ForAllMembers(opt=>opt.Ignore());;
+            // .ForAllMembers(opt=>opt.Ignore());;
 
             this.CreateMap<CommentDto, Comment>()
                 .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
-                .ForCtorParam("content", opt => opt.MapFrom(src => src.Content));
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            this.CreateMap<Comment, CommentDto>()
+                .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
+
 
 
 
@@ -38,16 +43,16 @@ namespace Services.ConfigMap
 
 
 
-            this.CreateMap<Post, PostDto>()              
+            this.CreateMap<Post, PostDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id));
 
-               
+
 
 
 
             this.CreateMap<TagDto, Tag>()
                 .ForCtorParam("name", opt => opt.MapFrom(src => src.Name));
-           
+
 
 
 
@@ -57,5 +62,5 @@ namespace Services.ConfigMap
 
     }
 }
-     //.ForCtorParam("email", opt => opt.MapFrom(src => src.Email))
-     //           .ForCtorParam("password", opt => opt.MapFrom(src => src.Password));
+//.ForCtorParam("email", opt => opt.MapFrom(src => src.Email))
+//           .ForCtorParam("password", opt => opt.MapFrom(src => src.Password));

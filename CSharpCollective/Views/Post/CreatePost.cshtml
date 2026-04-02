@@ -9,22 +9,33 @@
 <link rel="stylesheet" href="~/css/Post.css" asp-append-version="true" />
 <div class="main">
     <partial name="_Sidebar" />
-    <div class="createFrom">
-        @if(role=="Admin")
-        {
-        <h2>Create Post</h2>
-        <div>
-            <form asp-action="Create" method="post">
+    <div class="dataForm">
+        <div class="createForm">
+            @if (role == "Admin")
+            {
+                <h2>Create Post</h2>
+                <div>
+                    <form asp-action="Create" method="post">
 
-                <label>Title</label>
-                <input name="Title" class="form-control" />
-                <label>Content</label>
-                <textarea name="Content" class="form-control"></textarea>
-                
-                <button type="submit" class="btn btn-success mt-2">Save</button>
-            </form>
-            </div>
-        }
+                        <label>Title</label>
+                        <input name="Title" class="form-control" />
+                        <label>Content</label>
+                        <textarea name="Content" class="form-control"></textarea>
+
+                        <button type="submit" class="btn btn-success mt-2">Save</button>
+                    </form>
+                </div>
+            }
         </div>
+        <div  id="temp"> 
+
+            @if (@TempData["ErrorMessage"] != null)
+            {
+                 <p>@TempData["ErrorMessage"]</p>
+            }
+         
+            </div>
     </div>
-    TempData["ErrorMessage"]
+   
+
+    </div>
