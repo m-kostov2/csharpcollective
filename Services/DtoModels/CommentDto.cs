@@ -23,6 +23,6 @@ namespace CSharpCollective.Services.DtoModels
         public string AuthorName { get; private set; }     
         public virtual UserDto Author { get; set; }
         [MaxLength(Constrains.MaxCommentContentLength)]
-        public string Content { get; private set; }
+        public string Content { get; set; }
     }
 }

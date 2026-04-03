@@ -5,9 +5,9 @@
 @{
     var userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
     var role = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
-    
+
 }
-<link rel="stylesheet" href="~/css/Post.css" asp-append-version="true" />
+<link rel="stylesheet" href="~/css/Comment.css" asp-append-version="true" />
 
 <div class="main">
 
@@ -16,8 +16,11 @@
     <div class="posts">
         <h2>Posts</h2>
 
-     
-        <a asp-controller="Comment" asp-action="Create" class="btn btn-primary">Create New Comment</a>
+        @if (role == "Admin")
+        {<a asp-controller="Comment" asp-action="Create" class="btn btn-primary">Create New Comment</a> }
+        
+       
+
 
 
 
@@ -32,9 +35,8 @@
                 @if (role == "Admin")
                 {
                     <div>
-                        <p>@comment.Content == Content</p>
                         <p>@comment.AuthorId == userId</p>
-                        <a asp-controller="Post" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-sm">Delete</a>
+                        <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-sm">Delete</a>
 
                     </div>
                 }

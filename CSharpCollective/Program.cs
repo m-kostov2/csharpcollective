@@ -83,6 +83,9 @@ namespace CSharpCollective
               name: "Post",
               pattern: "{controller=Post}/{action=Post}");
             app.MapControllerRoute(
+              name: "Comment",
+              pattern: "{controller=Comment}/{action=Comment}");
+            app.MapControllerRoute(
                 name: "Post",
                 pattern: "{controller=Post}/{action=Edit}/{id?}");
 

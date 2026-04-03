@@ -35,13 +35,13 @@ namespace CSharpCollective.Controllers
             return View(comments);
         }
 
-        [OutputCache(Duration = 10)]
+       
         [HttpGet]
         public IActionResult Create()
         {
             return View("CreateComment");
         }
-        [OutputCache(Duration = 10)]
+        
         [HttpPost]
         public IActionResult Create(CommentDto comment)
         {
@@ -52,7 +52,7 @@ namespace CSharpCollective.Controllers
             var commentCheck = _commentService.CommentCheck(comment);
             if (commentCheck == null)
             {
-                TempData["ErrorMessage"] = "Title or content exceeds maximum length of 100 and 2000 or one of them is empty. Please try again.";
+                TempData["ErrorMessage"] = "Content exceeds maximum length of 2000 or is empty. Please try again.";
                 return RedirectToAction("Create");
             }
             _commentService.Create(comment);

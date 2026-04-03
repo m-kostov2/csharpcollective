@@ -4,7 +4,7 @@
     var userId = HttpContextAccessor.HttpContext.Session.GetString("UserId");
     var role = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
 }
-@model CSharpCollective.Controllers.CommentController;
+@model CSharpCollective.Services.DtoModels.CommentDto;
 
 <link rel="stylesheet" href="~/css/Comment.css" asp-append-version="true" />
 <div class="main">
@@ -15,10 +15,9 @@
             <h2>Leave a comment or a suggestion</h2>
             <div>
                 <form asp-action="Create" method="post">
-                   
-                    <label>Content</label>
-                    <textarea name="Content" class="form-control"></textarea>
-                    
+
+                    <label>Content</label>           
+                    <textarea asp-for="Content" class="form-control"></textarea>
                     <button type="submit" class="btn btn-success mt-2">Post comment</button>
                 </form>
             </div>
