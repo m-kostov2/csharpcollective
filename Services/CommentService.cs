@@ -43,7 +43,7 @@ namespace Services
                 _context.SaveChanges();
             
             CommentDto commentDtoInfo = new CommentDto(commentInfo.Content);
-
+            _mapper.Map(commentInfo, commentDtoInfo);
 
 
 

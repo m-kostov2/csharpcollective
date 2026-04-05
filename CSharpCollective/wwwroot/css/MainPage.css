@@ -8,6 +8,9 @@
     min-height: calc(100vh - 60px);
     background-color: #1E3E62;
 }
+.main-1 {
+    max-height: 100%;
+}
 
 
     .aside .nav-link {

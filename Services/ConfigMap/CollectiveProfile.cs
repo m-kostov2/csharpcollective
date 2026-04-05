@@ -26,12 +26,12 @@ namespace Services.ConfigMap
             // .ForAllMembers(opt=>opt.Ignore());;
 
             this.CreateMap<CommentDto, Comment>()
-                .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ForCtorParam("content", opt => opt.MapFrom(src => src.Content));
+
 
             this.CreateMap<Comment, CommentDto>()
-                .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ForCtorParam("content", opt => opt.MapFrom(src => src.Content));
+                
 
 
 

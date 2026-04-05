@@ -8,18 +8,19 @@ using DataBase.DataContext;
 using DataBase.Models;
 using Microsoft.EntityFrameworkCore;
 using Services.ConfigMap;
+using Services.Interfaces;
 
 
 namespace Services
 {
-    public class LoginService 
+    public class LoginService : IUserValidation
     {
 
         private CollectiveContext _context;
         private readonly IMapper _mapper;
 
 
-        public LoginService( IMapper mapper)
+        public LoginService(IMapper mapper)
         {
             _context = new CollectiveContext();
             _mapper = mapper;
@@ -28,12 +29,18 @@ namespace Services
 
 
 
-        public  UserDto userExists(UserDto Datarecieved)
+        public UserDto userExists(UserDto Datarecieved)
         {
-         
+
+
+            if (userValidation(Datarecieved) == false)
+            {
+                return null;
+            }
+
 
             User userInfo = new User();
-             
+
             _mapper.Map(Datarecieved, userInfo);
 
 
@@ -42,44 +49,44 @@ namespace Services
             UserDto userDtoInfo = new UserDto();
             if (userExists != null)
             {
-                string role = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Role).Single().ToString();   
-                string password = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Password).Single().ToString();  
-                if(password != userInfo.Password)
+                string role = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Role).Single().ToString();
+                string password = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Password).Single().ToString();
+                if (password != userInfo.Password)
                 {
-                    userDtoInfo.Password = "Wrong Password";                    
+                    userDtoInfo.Password = "Wrong Password";
                     return userDtoInfo;
                 }
                 if (role == "Admin")
                 {
                     userInfo = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => new User
                     {
-                        
+
                         UserName = u.UserName,
                         Email = u.Email,
                         Role = u.Role,
                         Posts = u.Posts.ToArray()
-                        
+
                     }).Single();
-                    
-                    
+
+
 
                 }
                 else if (role == "User")
                 {
                     userInfo = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => new User
                     {
-                        
+
                         UserName = u.UserName,
                         Email = u.Email,
                         Role = u.Role,
                         LastOnline = DateTime.Now
 
-                    }).Single();                  
-                    
+                    }).Single();
+
                 }
                 // _context.Users.Update(userInfo);
-                 userInfo = _context.Users.Single(u => u.UserName == userInfo.UserName);
-                 userInfo.LastOnline = DateTime.Now;
+                userInfo = _context.Users.Single(u => u.UserName == userInfo.UserName);
+                userInfo.LastOnline = DateTime.Now;
                 _context.SaveChanges();
                 _mapper.Map(userInfo, userDtoInfo);
             }
@@ -88,22 +95,22 @@ namespace Services
                 userDtoInfo = null;
                 return userDtoInfo;
             }
-             
-            return  userDtoInfo;
+
+            return userDtoInfo;
 
         }
 
-        public User userExists(User Datarecieved)
+        internal User userExists(User Datarecieved)
         {
 
 
             User userInfo = new User();
-            userInfo =  Datarecieved;
-
-            
+            userInfo = Datarecieved;
 
 
-            var userExists = _context.Users.SingleOrDefault(u => u.UserName == userInfo.UserName);           
+
+
+            var userExists = _context.Users.SingleOrDefault(u => u.UserName == userInfo.UserName);
             if (userExists != null)
             {
                 var role = _context.Users.Where(u => u.UserName == userInfo.UserName).Select(u => u.Role).ToString();
@@ -133,11 +140,11 @@ namespace Services
                     }).Single();
 
                 }
-               
+
             }
             else if (userExists == null)
             {
-                userInfo = null;               
+                userInfo = null;
                 return userInfo;
             }
 
@@ -145,6 +152,17 @@ namespace Services
 
         }
 
+        public bool userValidation(UserDto userData)
+        {
+            if (String.IsNullOrEmpty(userData.Email) || String.IsNullOrEmpty(userData.UserName))
+            {
+                return false;
+            }
+
+
+            return true;
+        }
 
     }
 }
+

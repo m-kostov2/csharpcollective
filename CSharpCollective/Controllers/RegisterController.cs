@@ -41,7 +41,7 @@ namespace CSharpCollective.Controllers
                 return RedirectToAction("MainPage", "MainPage");
             }
 
-            TempData["RegisterError"] = "User Exists";
+            TempData["RegisterError"] = "User Exists or Wrong Input";
             return View();
         }
     }

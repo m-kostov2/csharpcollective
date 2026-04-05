@@ -24,7 +24,8 @@ body {
     min-height: 100vh;
 }
 .pb-3 {
-    min-height: 100vh;
+    padding-bottom: 0;
+    margin-bottom: 0;
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {

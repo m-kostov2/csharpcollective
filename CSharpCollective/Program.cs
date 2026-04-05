@@ -18,11 +18,11 @@ namespace CSharpCollective
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            
 
-           
+
+
             builder.Services.AddDbContext<CollectiveContext>();
-           
+
 
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
@@ -30,25 +30,25 @@ namespace CSharpCollective
             builder.Services.AddTransient<LoginService>();
             builder.Services.AddTransient<RegisterService>();
             builder.Services.AddTransient<CommentService>();
-            builder.Services.AddTransient<PostService>();    
+            builder.Services.AddTransient<PostService>();
             builder.Services.AddTransient<LogCheck>();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession();
-            
+
 
 
             builder.Services.AddRazorPages();
             builder.Services.AddControllersWithViews();
-            
+
 
             var app = builder.Build();
-             app.UseSession();
+            app.UseSession();
             var scope = app.Services.CreateScope();
             var db = scope.ServiceProvider.GetRequiredService<CollectiveContext>();
             db.Database.EnsureCreated();
 
-            
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -63,19 +63,18 @@ namespace CSharpCollective
 
             app.UseHttpsRedirection();
             app.UseRouting();
-            
+
             app.UseAuthorization();
 
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=MainPage}/{action=MainPage}/{id?}")
+                pattern: "{controller=MainPage}/{action=MainPage}")
                 .WithStaticAssets();
 
             app.MapControllerRoute(
                name: "Login",
-               pattern: "{controller=Login}/{action=Login}/{id?}");
-
+               pattern: "{controller=Login}/{action=Login}");
             app.MapControllerRoute(
               name: "Register",
               pattern: "{controller=Register}/{action=Register}");
@@ -85,9 +84,7 @@ namespace CSharpCollective
             app.MapControllerRoute(
               name: "Comment",
               pattern: "{controller=Comment}/{action=Comment}");
-            app.MapControllerRoute(
-                name: "Post",
-                pattern: "{controller=Post}/{action=Edit}/{id?}");
+
 
             app.MapRazorPages()
                .WithStaticAssets();
