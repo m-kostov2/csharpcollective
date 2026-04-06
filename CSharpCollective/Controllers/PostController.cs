@@ -63,7 +63,7 @@ namespace CSharpCollective.Controllers
         public IActionResult Edit(Guid id)
         {
 
-            var post = _postService.GetById(id);
+            PostDto post = _postService.GetById(id);
             if (post == null)
             {
                 return NotFound();

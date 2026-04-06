@@ -72,7 +72,7 @@ namespace Services
 
         public bool userValidation(UserDto userData)
         {
-            if (String.IsNullOrEmpty(userData.Email) || String.IsNullOrEmpty(userData.UserName))
+            if (String.IsNullOrEmpty(userData.Email) || String.IsNullOrEmpty(userData.UserName) ||String.IsNullOrEmpty(userData.Password))
             {
                 return false;
             }

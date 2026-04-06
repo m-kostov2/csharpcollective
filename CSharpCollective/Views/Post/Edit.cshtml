@@ -1,4 +1,7 @@
-﻿
+﻿@{
+    Guid Id = Model.Id;
+    Guid authorid = Model.AuthorId;
+}
 @model CSharpCollective.Services.DtoModels.PostDto;
 <link rel="stylesheet" href="~/css/Post.css" asp-append-version="true" />
 <div class="main">
@@ -12,6 +15,9 @@
                 <textarea name="Title" class="form-control">@Model.Title</textarea>              
                 <label>Content</label>
                 <textarea name="Content" class="form-control">@Model.Content</textarea>
+                <input type="hidden" asp-for="@Id" />
+                <input type="hidden" asp-for="@authorid" />
+                
 
                 <button type="submit" class="btn btn-success mt-2">Save</button>
             </form>

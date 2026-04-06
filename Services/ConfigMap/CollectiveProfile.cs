@@ -31,15 +31,15 @@ namespace Services.ConfigMap
 
             this.CreateMap<Comment, CommentDto>()
                 .ForCtorParam("content", opt => opt.MapFrom(src => src.Content));
-                
+
 
 
 
 
             this.CreateMap<PostDto, Post>()
                 .ForCtorParam("title", opt => opt.MapFrom(src => src.Title))
-                .ForCtorParam("content", opt => opt.MapFrom(src => src.Content))
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
+                .ForCtorParam("content", opt => opt.MapFrom(src => src.Content));
+                
 
 
 

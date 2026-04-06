@@ -13,37 +13,38 @@
 
 
     <partial name="_Sidebar" />
-    <div class="posts">
-        <h2>Posts</h2>
+    <div class="comments">
+        <h2>Comments and suggestions</h2>
 
-        @if (role == "Admin")
-        {<a asp-controller="Comment" asp-action="Create" class="btn btn-primary">Create New Comment</a> }
-        
        
+            <a asp-controller="Comment" asp-action="Create" class="btn btn-primary">Create New Comment</a>
+        
 
 
 
 
-        @foreach (var comment in Model)
-        {
-            <div class="card mb-3 p-3">
-                <p>@comment.AuthorName</p>
-                <a>@comment.Content</a>
+        <div class="comments1">
+
+            @foreach (var comment in Model)
+            {
+                <div class="card mb-3 p-3">
+                    <p>@comment.AuthorName</p>
+                    <a>@comment.Content</a>
 
 
 
-                @if (role == "Admin")
-                {
-                    <div>
-                        <p>@comment.AuthorId == userId</p>
-                        <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-sm">Delete</a>
+                    @if (role == "Admin")
+                    {
+                        <div>
+                            <p>AuthorId: @comment.AuthorId</p>
+                            <a asp-controller="Comment" asp-action="Delete" asp-route-id="@comment.Id" class="btn btn-danger btn-sm">Delete</a>
 
-                    </div>
-                }
-            </div>
+                        </div>
+                    }
+                </div>
 
-        }
-
+            }
+        </div>
 
 
     </div>

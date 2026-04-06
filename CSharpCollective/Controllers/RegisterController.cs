@@ -17,7 +17,7 @@ namespace CSharpCollective.Controllers
         {
 
 
-            registerService = new RegisterService( mapper);
+            registerService = new RegisterService(mapper);
 
         }
 

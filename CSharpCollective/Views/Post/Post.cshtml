@@ -22,7 +22,7 @@
         }
 
 
-
+        <div class ="post1">
         @foreach (var post in Model)
         {
             <div class="card mb-3 p-3">
@@ -36,19 +36,22 @@
                 @if (role == "Admin")
                 {
                     <div>
-                        <p>@post.Id == Id</p>
-                        <p>@post.AuthorId == userId</p>
-                        <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.Id.ToString()" class="btn btn-danger btn-sm">Edit</a>
+                        <p>Post Id: @post.Id</p>
+                        <p>Author Id: @post.AuthorId </p>
+                        <section class="buttons">
+                            <a asp-controller="Post" asp-action="Edit" asp-route-id="@post.Id.ToString()" class="btn btn-danger btn-sm">Edit</a>
 
-                        <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.Id" class="btn btn-danger btn-sm">Delete</a>
+                            <a asp-controller="Post" asp-action="Delete" asp-route-id="@post.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </section>
+
 
                     </div>
                 }
             </div>
-            
+
         }
 
-       
+        </div>
 
     </div>
 </div>

@@ -1,5 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using DataBase.ModelConstrains;
+﻿using DataBase.ModelConstrains;
+using DataBase.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace CSharpCollective.Services.DtoModels
 {
@@ -9,10 +10,13 @@ namespace CSharpCollective.Services.DtoModels
         {
 
             this.Name = Name;
+            this.Posts = new HashSet<Post>();
         }
         [Key]
         public int Id { get; set; }
         [MaxLength(Constrains.MaxCategoryNameLength)]
-        public string Name { get; private set; }
+        public string Name { get; set; }
+
+        public virtual ICollection<Post>? Posts { get; set; }
     }
 }

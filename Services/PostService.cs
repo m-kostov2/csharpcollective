@@ -40,7 +40,7 @@ namespace Services
                 _context.Posts.AddAsync(postInfo);
                 _context.SaveChanges();
             }
-            PostDto postDtoInfo = new PostDto(postInfo.Title,postInfo.Content);
+            PostDto postDtoInfo = new PostDto(postInfo.Title,postInfo.Content,postInfo.Id);
 
             
 
@@ -60,9 +60,10 @@ namespace Services
 
 
             Post postInfo = new Post();
+            _mapper.Map(Datarecieved, postInfo);
             postInfo = _context.Posts.Where(p => p.Id == Datarecieved.Id).Single();
             Datarecieved.AuthorId = postInfo.AuthorId;
-          //  Datarecieved.UpdatedAt = DateTime.Now;
+            Datarecieved.UpdatedAt = DateTime.Now;
             _mapper.Map(Datarecieved, postInfo);
             _context.SaveChangesAsync();
 

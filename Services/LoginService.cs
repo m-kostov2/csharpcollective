@@ -154,7 +154,7 @@ namespace Services
 
         public bool userValidation(UserDto userData)
         {
-            if (String.IsNullOrEmpty(userData.Email) || String.IsNullOrEmpty(userData.UserName))
+            if (String.IsNullOrEmpty(userData.Password) || String.IsNullOrEmpty(userData.UserName))
             {
                 return false;
             }
