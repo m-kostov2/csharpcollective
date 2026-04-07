@@ -1,5 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model IEnumerable<CSharpCollective.Services.DtoModels.PostDto>
+
+
+<link rel="stylesheet" href="~/css/Category.css" asp-append-version="true" />
+
+
+<div class="main">
+    <partial name="_Sidebar" />
+
+
+    <div class="categories">
+        <h1>Search by category</h1>
+        <form method="get" asp-action="Category" asp-controller="Category">
+            <input type="text" name="category" placeholder="Search.." />
+            <button type="submit">Search</button>
+        </form>
+
+
+
+
+        <div class="categories1">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var post in Model)
+                {
+                    <div class="card mb-3 p-3">
+                        <h4>@post.Title</h4>
+                        <p>@post.Content</p>
+                        <p>Author: @post.AuthorName</p>
+
+                        @foreach (var category in post.Categories)
+                        {
+                            <p>@category.Name</p>
+                        }
+
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No posts found. Enter a category to start searching.</p>
+            }
+        </div>
+    </div>
+
+</div>

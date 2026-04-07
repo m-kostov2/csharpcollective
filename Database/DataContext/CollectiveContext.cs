@@ -52,8 +52,8 @@ namespace DataBase.DataContext
                             maxRetryDelay: TimeSpan.FromSeconds(10),
                             errorNumbersToAdd: null
                         )
-                    )
-                    .UseLazyLoadingProxies();
+                    );
+                    
             }
 
         }

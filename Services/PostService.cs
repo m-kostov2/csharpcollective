@@ -5,6 +5,7 @@ using DataBase.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Linq;
 
 
 namespace Services
@@ -28,9 +29,9 @@ namespace Services
         {
 
 
-            Post postInfo = new Post(Datarecieved.Title,Datarecieved.Content);
-           
-           
+            Post postInfo = new Post(Datarecieved.Title, Datarecieved.Content);
+
+
             _mapper.Map(Datarecieved, postInfo);
 
             var postExists = _context.Posts.Any(p => p.Id == postInfo.Id);
@@ -40,9 +41,9 @@ namespace Services
                 _context.Posts.AddAsync(postInfo);
                 _context.SaveChanges();
             }
-            PostDto postDtoInfo = new PostDto(postInfo.Title,postInfo.Content,postInfo.Id);
+            PostDto postDtoInfo = new PostDto(postInfo.Title, postInfo.Content, postInfo.Id);
 
-            
+
 
 
             return postDtoInfo;
@@ -81,15 +82,37 @@ namespace Services
         {
             var posts = _context.Posts.Select(n => new Post
             {
-                Id=n.Id,
-                Title=n.Title,
-                Content=n.Content,    
-                AuthorId =n.AuthorId
+                Id = n.Id,
+                Title = n.Title,
+                Content = n.Content,
+                AuthorId = n.AuthorId
             }
                 ).ToList();
             var postDtos = _mapper.Map<List<Post>, List<PostDto>>(posts);
             return postDtos;
         }
+
+        public IEnumerable<PostDto> GetAllByCategory(string category)
+        {
+            var posts = _context.Posts
+            .Include(p => p.Categories)
+            .Where(p => p.Categories.Any(c => c.Name.ToLower() == category.ToLower())).
+            Select(n => new Post
+            {
+                Id = n.Id,
+                Title = n.Title,
+                Content = n.Content,
+                AuthorId = n.AuthorId
+            }
+                )
+            .ToList();
+            var postDtos = _mapper.Map<List<Post>, List<PostDto>>(posts);
+            return postDtos;
+        }
+
+
+
+
 
         public PostDto GetById(Guid id)
         {
@@ -101,6 +124,39 @@ namespace Services
 
 
         }
+
+      
+        public void AddCategoryToPost(Guid Id, string Category)
+        {
+
+            var category = _context.Categories
+           .FirstOrDefault(c => c.Name.ToLower() == Category.ToLower().Trim());
+
+            if (category == null)
+            {
+                category = new Category { Name = Category };
+            }
+
+            var post = _context.Posts
+                .Include(p => p.Categories)
+                .FirstOrDefault(p => p.Id == Id);
+
+            if (post != null)
+            {
+
+                if (!post.Categories.Any(c => c.Name.ToLower() == Category.ToLower().Trim()))
+                {
+                    post.Categories.Add(category);
+                }
+
+                _context.SaveChanges();
+
+
+
+            }
+        }
+
+
 
         public PostDto PostCheck(PostDto Datarecieved)
         {

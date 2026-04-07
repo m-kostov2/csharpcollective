@@ -1,0 +1,22 @@
+﻿@model CSharpCollective.Services.DtoModels.PostDto
+
+<div class="container mt-4">
+    <h2>Add Category to: @Model.Title</h2>
+
+    <form asp-action="AddCategory" method="post">
+      
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="Title" />
+        <input type="hidden" asp-for="Content" />
+        <input type="hidden" asp-for="AuthorName" />
+
+        <div class="form-group mb-3">
+            <label class="form-label">Enter Name</label>
+            <input type="text" name="Category" class="form-control" placeholder="Enter category name..." required />
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Add Category</button>
+        </div>
+    </form>
+</div>

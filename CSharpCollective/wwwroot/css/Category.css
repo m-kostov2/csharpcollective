@@ -1,2 +1,89 @@
 ﻿body {
 }
+body {
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+  
+}
+
+.create-Form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-control {
+    width: 50vh;
+}
+
+ .form-control:nth-child(4) {
+     width: 50vh;
+     height: 30vh;
+ }
+
+#temp {
+    padding: 1em;
+    height: fit-content;
+    width: 40%;
+}
+
+ #temp p {
+     padding: 1em;
+     background-color: red;
+     color: white;
+     font-weight: bold;
+     height: fit-content;
+ }
+
+input[type=text] {
+   
+    padding: 4px;
+    margin-top: 2px;
+    border: none;
+    font-size: 17px;
+    border: 1px solid black;
+    border-radius: 1rem;
+}
+button {
+    width: 25%;
+    background-color: white;
+    color: black;
+    border-radius: 0.25rem;
+    font-weight: bold;
+}
+
+
+    button:hover {
+        width: 25%;
+        background-color: #DA0037;
+        color: white;
+        border-radius: 0.25rem;
+    }
+
+.dataForm {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.createForm {
+    padding-left: 1em;
+
+}
+
+.categories1 {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.categories {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.btn-primary {
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}

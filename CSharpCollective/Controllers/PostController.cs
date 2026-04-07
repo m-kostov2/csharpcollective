@@ -87,6 +87,36 @@ namespace CSharpCollective.Controllers
             return RedirectToAction("Post");
         }
 
+
+
+        [HttpGet]
+        public IActionResult AddCategory(Guid id)
+        {
+            var post = _postService.GetById(id); 
+            if (post == null) return NotFound();
+
+            return View(post);
+        }
+
+ 
+        [HttpPost]
+        public IActionResult AddCategory(PostDto post, string Category)
+        {
+            var postCheck = _postService.PostCheck(post);
+            if (postCheck == null)
+            {
+                TempData["EditError"] = "Validation failed. Please try again.";
+                return View(post); 
+            }
+
+  
+            _postService.AddCategoryToPost(post.Id, Category);
+
+            return RedirectToAction("Post");
+        }
+
+
+
         public IActionResult Delete(Guid id)
         {
             _postService.Delete(id);
@@ -94,62 +124,6 @@ namespace CSharpCollective.Controllers
 
             return RedirectToAction("Post"); // Back to list
         }
-
-
-
-
-        //[HttpGet]
-        //public IActionResult Post()
-        //{
-
-        //    IEnumerable<PostDto> posts = postService.GetAll();
-        //    if (posts.Count() == 0)
-        //    {
-        //        return RedirectToAction("Create");
-        //    }
-        //    return View(posts);
-        //}
-
-        //[HttpGet]
-        //public IActionResult Create()
-        //{
-
-        //    return View("CreatePost");
-        //}
-
-
-        //[HttpPost]
-        //public IActionResult Create(PostDto post)
-        //{
-        //    string userIdString = HttpContext.Session.GetString("UserId");
-
-        //    post.AuthorId = Guid.Parse(userIdString);
-        //    postService.Create(post);
-        //    return View("Post");
-        //}
-
-
-        //[HttpGet]
-        //public IActionResult Edit()
-        //{
-
-        //    return View("Edit");
-        //}
-
-        //[HttpPost]
-        //public IActionResult Edit(PostDto post)
-        //{
-        //    postService.Edit(post);
-        //    return View("Post");
-        //}
-
-        //[HttpPost]
-        //public IActionResult Delete(Guid Id)
-        //{
-
-        //    return RedirectToAction("Post");
-        //}
-
 
 
 

@@ -40,8 +40,8 @@ namespace DataBase.Models
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
 
-        public virtual ICollection<Category>? Categories { get; set; }
-        public virtual ICollection<Tag>? Tags { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
+        public virtual ICollection<Tag> Tags { get; set; }
 
     }
 }
